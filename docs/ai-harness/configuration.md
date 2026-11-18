@@ -80,13 +80,14 @@ The managed-config sync below delivers the tracked settings to the installed use
 
 ## Claude compaction
 
-The tracked `home/.claude/settings.json` sets `autoCompactEnabled` to `false`.
-This disables automatic and idle compaction; manual `/compact` remains available.
-Manage context explicitly with `/compact` or start a new session when needed.
-See [Claude compaction settings](https://code.claude.com/docs/en/settings-reference#autocompactenabled)
+The tracked `home/.claude/settings.json` enables `autoCompactEnabled` and disables `idleCompaction`.
+Claude retains automatic compaction near the context limit without compacting idle conversations.
+The model-dependent compaction threshold stays at its default; manual `/compact` remains available.
+The idle-only setting requires Claude Code v2.1.290 or later.
+See [Claude idle compaction settings](https://code.claude.com/docs/en/settings-reference#idlecompaction)
 for the native setting.
-The managed-config sync below delivers this preference to the installed user copy.
-Remove the key and sync again to restore the default.
+The managed-config sync below delivers these preferences to the installed user copy.
+Remove `idleCompaction` and sync again to restore default idle compaction.
 
 ## Claude delegation restriction
 

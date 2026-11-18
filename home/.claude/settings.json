@@ -1,6 +1,7 @@
 {
   "outputStyle": "Clear",
-  "autoCompactEnabled": false,
+  "autoCompactEnabled": true,
+  "idleCompaction": false,
   "hooks": {
     "PermissionRequest": [
       {
