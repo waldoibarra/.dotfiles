@@ -78,6 +78,16 @@ Read [Claude effort settings](https://code.claude.com/docs/en/settings-reference
 before changing these defaults.
 The managed-config sync below delivers the tracked settings to the installed user copy.
 
+## Claude compaction
+
+The tracked `home/.claude/settings.json` sets `autoCompactEnabled` to `false`.
+This disables automatic and idle compaction; manual `/compact` remains available.
+Manage context explicitly with `/compact` or start a new session when needed.
+See [Claude compaction settings](https://code.claude.com/docs/en/settings-reference#autocompactenabled)
+for the native setting.
+The managed-config sync below delivers this preference to the installed user copy.
+Remove the key and sync again to restore the default.
+
 ## Claude delegation restriction
 
 Claude user settings deny `Agent` across projects.
