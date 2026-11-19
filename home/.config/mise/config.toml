@@ -14,6 +14,7 @@ node = "lts"
 "npm:@anthropic-ai/claude-code" = { version = "latest", allow_builds = true }
 "npm:@earendil-works/pi-coding-agent" = "latest"
 "npm:@fission-ai/openspec" = "latest"
+"npm:@higgsfield/cli" = { version = "latest", allow_builds = true }
 "npm:@open-pencil/cli" = "latest"
 "npm:@open-pencil/mcp" = "latest"
 python = ["latest", "3.12"]

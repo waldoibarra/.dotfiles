@@ -268,6 +268,13 @@ pin.
 Read [Agent UI design tools](/docs/ai-harness/design-tools.md) before using the CLI or desktop
 bridge.
 
+### Higgsfield
+
+Mise owns `npm:@higgsfield/cli` at `latest`, with build scripts allowed.
+Run `just mise-sync` to install, upgrade, and prune the declared CLI.
+Use `mise which higgsfield` to inspect its resolved executable.
+Use `mise exec -- higgsfield --version` to verify the managed installation.
+
 ## Git hooks
 
 [`hk.pkl`](/hk.pkl) defines pre-commit checks for shell, Markdown, EditorConfig and YAML.

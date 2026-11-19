@@ -12,10 +12,6 @@
     "fireflies": {
       "type": "http",
       "url": "https://api.fireflies.ai/mcp"
-    },
-    "higgsfield": {
-      "type": "http",
-      "url": "https://mcp.higgsfield.ai/mcp"
     }
   }
 }
