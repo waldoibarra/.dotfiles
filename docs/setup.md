@@ -117,11 +117,11 @@ Restart an already-running Pi session after provisioning so it loads the new con
 
 ## Shared life map
 
-Waldo and Lluvia use a shared Obsidian vault at `~/life/`.
+I use a shared Obsidian vault at `~/life/`.
 It holds goals, domain links, ideas, and agent coordination.
 The vault is private and separate from this public-facing dotfiles repository.
 
-Set `export LIFE_PROFILE="waldo"` or `export LIFE_PROFILE="lluvia"` in your untracked
+Set `export LIFE_PROFILE="waldo"` (change the env var value to your name) in your untracked
 `~/.zprofile.local`. Open a new login terminal so `dots` inherits the selected profile.
 Read [local shell configuration](zsh-configuration.md#machine-local-configuration) before changing
 profile selection. Agent updates warn if the vault exists but `LIFE_PROFILE` is empty or unset.

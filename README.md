@@ -3,7 +3,7 @@
 A versioned development workstation with shell, Git, tools, and AI coding agents configured together.
 Built for Apple Silicon macOS, with partial Debian support.
 
-**This is a personal setup reference for Lluvia and my close ones, not a universal installer.**
+> This is a personal setup reference for me and my close ones, not a universal installer.
 
 ## Before installing
 
@@ -11,8 +11,7 @@ Read [setup](/docs/setup.md) before installing or configuring local overrides.
 
 **Installation risks:** Review SSH/AWS defaults before adopting this setup.
 Installation changes home-directory files and the login shell.
-Full sync can remove packages and push skill-lockfile commits; read setup boundaries before running
-commands.
+Full sync can remove packages; read setup boundaries before running commands.
 
 ## What this configures
 

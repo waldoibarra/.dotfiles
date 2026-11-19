@@ -17,7 +17,7 @@ Follow the audience-based routing in `soul.md`, rather than choosing a profile b
 Every DM uses `personal.md`, including Slack work messages.
 Social posts use `social-media.md`, including LinkedIn posts.
 This routing takes precedence over Ghostwriter's surface-based filenames.
-These files contain generic defaults, not learned voices for Waldo or Lluvia.
+These files contain generic defaults, not your learned voices.
 Personal examples and measured habits are excluded; the current writer's stated preferences
 guide individual voice.
 No person-specific learned profile is configured by these files.

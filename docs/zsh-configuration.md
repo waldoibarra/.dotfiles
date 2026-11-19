@@ -46,7 +46,7 @@ Create these directly in `$HOME`; do not track or symlink them through Dotbot:
 Set the shared-vault profile in your untracked `~/.zprofile.local`:
 
 ```sh
-export LIFE_PROFILE="waldo" # Use "lluvia" on Lluvia's machine.
+export LIFE_PROFILE="waldo" # Use your name on your machine.
 ```
 
 The value names your directory under `~/life/people/`; never infer it from the operating-system username.

@@ -17,8 +17,6 @@ machines.
 
 **Non-goals:** Custom schemas, terminal orchestration frameworks, company adoption, and wholesale
 conversion of historical records.
-Live multi-agent collaboration and Lluvia's workstation verification require their own observed
-results.
 
 ## Decisions
 

@@ -108,6 +108,4 @@ printf '%s\n' '<https://obsidian.md/help/cli>' |
 **Verify:** Run `python3 scripts/tests/test-obsidian.py` before provisioning changed rules on both
 computers.
 Local setup and fixtures passed; Waldo confirmed formatting and the ruler.
-Lluvia's setup passed: tools, plugins, formatter settings, and ruler activation were verified.
-Cmd+S formatting and the ruler's appearance remain unverified on Lluvia's machine.
 Agent requirements are instructions, not unavoidable hooks or watchers.
