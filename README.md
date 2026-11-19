@@ -1,5 +1,11 @@
 # Dotfiles
 
+![A brass laptop shows an architect and two builders checking a bridge against its plan.][cover]
+
+_How I set up my workstation and teach my AI agents to work alongside me._
+
+[cover]: docs/assets/dotfiles-architect.png
+
 I keep my shell, Git settings, development tools, and coding-agent configuration in one checkout.
 That gives me a record of what changed and a starting point for another workstation.
 The setup targets Apple Silicon macOS; Debian support is partial.
