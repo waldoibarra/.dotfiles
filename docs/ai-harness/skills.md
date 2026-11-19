@@ -51,6 +51,7 @@ Dotbot links these bundles individually; the external manifest does not manage t
 | Assessing outcomes, repeated friction, and approved improvements | [`feedback-loop`](/home/.agents/skills/feedback-loop/SKILL.md) |
 | Teaching with Socratic questions and checked application | [`socratic-teaching`](/home/.agents/skills/socratic-teaching/SKILL.md) |
 | Adding assigned manual tasks to the shared life list | [`shared-todo`](/home/.agents/skills/shared-todo/SKILL.md) |
+| Directing still images and comparing drafts | [`image-art-direction`](/home/.agents/skills/image-art-direction/SKILL.md) |
 | Selecting a disposable prototype or POC and routing its execution | [`prototype-selection`](/home/.agents/skills/prototype-selection/SKILL.md) |
 | Starting an empty project without an application stack | [`project-init`](/home/.agents/skills/project-init/SKILL.md) |
 | Writing or reviewing shell scripts | [`shell-scripting`](/home/.agents/skills/shell-scripting/SKILL.md) |
@@ -60,7 +61,7 @@ Dotbot links these bundles individually; the external manifest does not manage t
 | Analyzing audiovisual evidence or bounded YouTube live captures | [`video-analysis`](/home/.agents/skills/video-analysis/SKILL.md) |
 | Transcribing speech locally with provenance and coverage checks | [`audio-transcription`](/home/.agents/skills/audio-transcription/SKILL.md) |
 
-- The fourteen `home/.agents/skills/` bundles link to `~/.agents/skills/`,
+- The `home/.agents/skills/` bundles link to `~/.agents/skills/`,
   `~/.claude/skills/`, and `~/.cursor/skills/`.
 - Editing an installed symlink edits this checkout; edit the tracked source.
 
@@ -137,7 +138,8 @@ Historical records may use prior names; use these current names for invocation a
 | `web-app-craft` | `web-interface` | Coordinate interface behavior and layout |
 
 No legacy aliases are installed; update external references before invoking retired names.
-Dotbot removes obsolete managed links; unmanaged files remain untouched.
+Dotbot cleans obsolete skill links under `~/.agents/skills/` and `~/.claude/skills/`, not `~/.cursor/skills/`.
+Check Cursor separately for broken links after renaming or retiring a skill.
 Reload the client after migration and verify discovery separately from actual task behavior.
 
 ## Pi discovery

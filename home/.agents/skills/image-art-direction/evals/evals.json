@@ -1,0 +1,43 @@
+{
+  "skill_name": "image-art-direction",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Make the river reflect the aurora without changing my face.",
+      "expected_output": "Choose image-art-direction; protect the subject and compare a draft at display size.",
+      "files": [],
+      "assertions": [
+        "Choose image-art-direction; protect the subject and compare a draft at display size."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Submit this exact prompt to Higgsfield without revising it.",
+      "expected_output": "Route directly to higgsfield-generate.",
+      "files": [],
+      "assertions": [
+        "Route directly to higgsfield-generate."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Critique my draft without generating another image.",
+      "expected_output": "Review only; no job, upload, upscale or publication.",
+      "files": [],
+      "assertions": [
+        "Review only; no job, upload, upscale or publication."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Two draft jobs cost 1.5 and 2 credits. Deliver one image for review.",
+      "expected_output": "One medium draft and a short credit line.",
+      "files": [],
+      "assertions": [
+        "Delivers one image, without crops or comparison sheets.",
+        "Reports each actual charge and the 3.5-credit request total.",
+        "Reports remaining balance when verified; never invents it."
+      ]
+    }
+  ]
+}

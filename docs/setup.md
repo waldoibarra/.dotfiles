@@ -121,8 +121,9 @@ I use a shared Obsidian vault at `~/life/`.
 It holds goals, domain links, ideas, and agent coordination.
 The vault is private and separate from this public-facing dotfiles repository.
 
-Set `export LIFE_PROFILE="waldo"` (change the env var value to your name) in your untracked
-`~/.zprofile.local`. Open a new login terminal so `dots` inherits the selected profile.
+Set `LIFE_PROFILE` to your existing directory name under `~/life/people/`, not your display name.
+For the `waldo` directory, add `export LIFE_PROFILE="waldo"` to your untracked `~/.zprofile.local`.
+Open a new login terminal so `dots` inherits the selection.
 Read [local shell configuration](zsh-configuration.md#machine-local-configuration) before changing
 profile selection. Agent updates warn if the vault exists but `LIFE_PROFILE` is empty or unset.
 

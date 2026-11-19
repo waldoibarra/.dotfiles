@@ -1,7 +1,8 @@
 # Dotfiles
 
-A versioned development workstation with shell, Git, tools, and AI coding agents configured together.
-Built for Apple Silicon macOS, with partial Debian support.
+I keep my shell, Git settings, development tools, and coding-agent configuration in one checkout.
+That gives me a record of what changed and a starting point for another workstation.
+The setup targets Apple Silicon macOS; Debian support is partial.
 
 > This is a personal setup reference for me and my close ones, not a universal installer.
 

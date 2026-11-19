@@ -72,7 +72,8 @@ DOTS_SEQUENTIAL=1 just sync
 ```
 
 Brew can replace libraries or build tools used by Mise backends during parallel updates.
-Sequential mode runs the complete Brew cycle before Mise tools.
+Sequential mode finishes Brew cleanup before starting Mise.
+A subsequent Mise failure cannot undo package removal.
 It does not add output labels.
 Missing Brew-owned Mise also selects sequential mode.
 The coordinator prints `Syncing Brew and Mise sequentially.`
