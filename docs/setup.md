@@ -50,7 +50,7 @@ The installer checks both prerequisites before changing submodules or invoking D
 ## Install the dotfiles
 
 ```sh
-git clone --recurse-submodules https://github.com/waldoibarra/dotfiles.git ~/.dotfiles
+git clone --recurse-submodules https://github.com/waldoibarra/.dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 ./scripts/install-dotfiles.sh
 ```

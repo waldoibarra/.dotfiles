@@ -1,4 +1,4 @@
-# Dotfiles
+# ~/.dotfiles
 
 Personal workstation configuration for Apple Silicon macOS, with partial Debian support.
 `home/` mirrors `$HOME`.

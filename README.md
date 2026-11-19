@@ -1,4 +1,4 @@
-# Dotfiles
+# ~/.dotfiles
 
 ![A brass laptop shows an architect and two builders checking a bridge against its plan.][cover]
 
