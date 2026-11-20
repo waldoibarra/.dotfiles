@@ -24,18 +24,10 @@ Label the workspace, tab, and pane by the [layer rules](naming.md#label-the-laye
 4. Rename the tab to the role and the pane to the worker's name. The name follows the
   [naming rules](naming.md) and keeps the model suffix: `roy-92-sonnet-docs`, not `roy-92-w3`.
   Pass each id as its own argument; a loop that word-splits one variable renames nothing.
-5. Start the worker under that name, a few seconds after the pane appears; `agent_pane_busy`
-  means its shell is not ready yet. Use `--kind claude` for Claude Code. Native agent flags go
-  after `--`. A Claude Code worker in a folder it has not seen, such as a new worktree, stops on
-  the "trust this folder" dialog: `agent start` answers `agent_not_ready`, yet the name is already
-  registered. Answer the dialog with `herdr pane send-keys <pane> Down Enter`, then continue with
-  step 6; a second `agent start` fails with `agent_name_taken`.
-6. Wait for idle once, after start. Then send the first message, written with the
-  [AIM template](/docs/prompting.md#prompt-template); a bare "read the brief at a path" is not a
-  prompt. Never add `--wait`.
-7. Do not wait again: end the turn, as the
-  [no foreground waits rule](/home/.agents/references/orchestration.md#coordinate-across-harnesses)
-  requires. The reply arrives as a prompt in the lead's session. Verify its claims against files.
+5. Pass the brief through the harness startup arguments in the newly created worker pane.
+    Use one shell-safe argument naming the mission and brief. Never submit it to an existing editor.
+6. Inspect startup failures before retrying: a timeout can leave the intended worker running.
+7. Verify the agreed output artifact. Do not send a reminder to the worker or the lead.
 8. Close the worker's tab once its deliverable is verified, and the workspace when its last tab
   closes, unless the operator asked to keep them. Close only containers this lead created.
   Closing ends the agent; say so in the reply.
@@ -43,12 +35,9 @@ Label the workspace, tab, and pane by the [layer rules](naming.md#label-the-laye
 ```sh
 herdr workspace create --cwd <dir> --label "<Task label>" --no-focus                 # step 3, first worker
 herdr tab create --workspace <ws-id> --cwd <dir> --label "<Role>"                    # step 3, later workers
-herdr pane send-keys <new-pane-id> Down Enter                                        # step 5, trust dialog only
 herdr tab rename <new-tab-id> "<Role>"                                               # step 4
 herdr pane rename <new-pane-id> <name>
-herdr agent start <name> --kind pi --pane <new-pane-id> --timeout 60000              # step 5
-herdr agent wait <name> --until idle --timeout 60000                                 # step 6
-herdr agent prompt <name> "$(cat <first-message-file>)"                              # step 6
+herdr agent start <name> --kind pi --pane <new-pane-id> -- --model <model> 'Review the plan in <brief>'
 herdr workspace close <new-workspace-id>                                             # step 8
 ```
 

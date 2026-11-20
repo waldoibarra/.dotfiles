@@ -19,8 +19,8 @@ This covers lead and worker output; OpenSpec artifacts also follow `docs`.
 - Use **at most 17 words per sentence**; preserve meaning and required literals.
 - Adapt presentation; check **clarity, scannability, and completeness**.
 
-**Maintainability:** Keep touched code, documentation, and environments understandable, modifiable,
-and verifiable.
+**Maintainability:** Codebase maintainability is a top priority.
+Keep touched code, documentation, and environments understandable, modifiable, and verifiable.
 
 - **DRY (Don't Repeat Yourself):** Keep **one canonical source per concern**; reuse or link.
 - **YAGNI (You Aren't Gonna Need It):** Avoid speculative features, abstractions, and configuration.
@@ -31,6 +31,11 @@ and verifiable.
 - **Proactively propose refactors** with evidence, benefits, scope, tradeoffs, and verification.
 - **Simplify within scope**; proposals do not authorize unrelated implementation or changes to
   other projects.
+
+**Documentation:** Every agent MUST use `docs` when changing or reviewing any project's documentation.
+This includes small edits alongside code and documentation assigned to workers.
+**Progressive disclosure is mandatory:** lead with the reader’s next action; link detail where needed.
+Keep each fact with one owner. A short page need not become several files.
 
 **Ambition:** Seek stronger outcomes while preserving settled choices, scope, budgets, and approval
 boundaries.

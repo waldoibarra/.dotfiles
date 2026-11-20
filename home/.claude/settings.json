@@ -97,6 +97,15 @@
             "type": "command"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${AGENT_MAIL_STOP_HOOK:-$HOME/.local/bin/agent-mail-stop}\"",
+            "timeout": 10
+          }
+        ]
       }
     ],
     "Stop": [
@@ -106,6 +115,16 @@
             "async": true,
             "command": "'/opt/homebrew/bin/moshi-hook' claude-hook",
             "type": "command"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${AGENT_MAIL_STOP_HOOK:-$HOME/.local/bin/agent-mail-stop}\"",
+            "asyncRewake": true,
+            "timeout": 3600
           }
         ]
       }
@@ -124,7 +143,9 @@
   },
   "permissions": {
     "defaultMode": "bypassPermissions",
-    "deny": ["Agent"]
+    "deny": [
+      "Agent"
+    ]
   },
   "skipDangerousModePermissionPrompt": true,
   "statusLine": {

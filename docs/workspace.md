@@ -54,6 +54,7 @@ Size alone does not replace the publication review above.
 
 | Read before… | Record |
 | --- | --- |
+| Reviewing draft-safe worker messaging | [Firstmate inbox research and proposed pilot](/docs/spikes/firstmate-inbox.md) |
 | Continuing video analysis or reviewing its single-trial observations before considering guidance changes | [Approved workflow](/openspec/changes/video-analysis-workflow/proposal.md), [checks](/openspec/changes/video-analysis-workflow/tasks.md), and [provisional observations](/openspec/changes/video-analysis-workflow/tasks.md#provisional-observations-for-future-review) |
 | Maintaining Cursor CLI and Herdr provisioning | [Approved change](/openspec/changes/integrate-cursor-herdr/proposal.md) and [checks](/openspec/changes/integrate-cursor-herdr/tasks.md) |
 | Continuing shared ambition and disposable prototype selection | [Approved scope and verification](/docs/plans/ai-harness-roadmap.md#shared-ambition-and-disposable-prototype-selection) |

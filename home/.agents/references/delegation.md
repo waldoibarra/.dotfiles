@@ -15,7 +15,10 @@ completion.
 | Exercise browser behavior | `browser-tester` | Real interactions and failure states are checked. |
 | Maintain explanations and navigation | `docs-writer` | Facts, links, terminology, and current status agree. |
 
-**Lead:** Orchestration is a main-session responsibility, not another child to launch recursively.
+**Lead:** The main session owns orchestration.
+Delegate team leadership only when the operator requests it.
+Give each delegated lead a bounded scope, named parent, worker limit, and stopping condition.
+Leaves never delegate. Each lead reconciles its workers’ evidence and reports to its parent.
 The lead retains decisions, Git writes, shared processes, publication, and user communication.
 Role descriptions define responsibilities; they do not prove tools, credentials, or model
 availability.
@@ -67,9 +70,13 @@ Never silently substitute another effort level or rely on an inherited default.
 
 ## Preserve control
 
-- Reserve Astra/Fable for main chat; auxiliary probes never use them. Astra may run an
-  independent reviewer or a bounded worker only on the operator's explicit request per task.
-  Main-model selection belongs to the user.
+- The operator selects the lead. For orchestrated implementation, pair Astra and Fable across harnesses.
+  An Astra lead plans with Fable; a Fable lead plans with Astra.
+  Use explicitly selected cheaper models for bounded implementation and independent review during revisions.
+  After integration tests, spawn a **fresh** opposite-model reviewer.
+  Review the complete implementation and its evidence.
+  Resolve findings and repeat affected tests before declaring completion.
+  Reserve flagship workers for these two reviews unless the operator explicitly requests another role.
 - Select every worker model explicitly; never inherit the lead or change parent model, billing, or
   privileges.
 - Report unavailable models before selecting a replacement; never silently substitute a model or

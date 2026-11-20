@@ -220,6 +220,18 @@ The contract defining an assignment's goal, boundaries, authority, expected deli
 completion criteria.
 _Avoid_: Prompt, when referring to the complete assignment contract rather than its transmission.
 
+**Agent mail**:
+A durable message addressed to one agent session within an authorized team.
+It carries coordination information, not operator authority.
+
+**Wake notification**:
+A signal asking the recipient harness to process pending agent mail.
+A wake notification is neither the message itself nor evidence of completed work.
+
+**Acknowledgment**:
+The recipient’s record that it handled a message. A result separately states the outcome and evidence.
+_Avoid_: Delivery receipt, which only confirms arrival.
+
 **Task record**:
 The durable account of an assignment's brief, ownership, state, evidence, and unresolved
 obligations.

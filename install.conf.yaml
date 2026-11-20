@@ -69,6 +69,9 @@
     ~/.config/ghostwriter/social-media.md: home/.config/ghostwriter/social-media.md
     ~/.pi/agent/AGENTS.md: home/.agents/AGENTS.md
     ~/.pi/agent/APPEND_SYSTEM.md: home/.pi/agent/APPEND_SYSTEM.md
+    ~/.local/bin/agent-mail: scripts/agent-mail.py
+    ~/.local/bin/agent-mail-stop: scripts/agent-mail-stop.py
+    ~/.pi/agent/extensions/agent-mail.ts: home/.pi/agent/extensions/agent-mail.ts
     # Pi settings are merged by scripts/update-coding-agents/sync-pi-settings.py.
     ~/.pi/agent/models.json: home/.pi/agent/models.json
     ~/.pi/agent/mcp.json: home/.agents/mcp.json
