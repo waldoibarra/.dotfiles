@@ -24,7 +24,7 @@ The profile directory stays real; credentials and runtime data stay outside the 
 
 ## Coding defaults and packages
 
-The coding defaults are `defaultProvider: "openai-codex"` and `defaultModel: "gpt-6-astra"`.
+The coding defaults are `defaultProvider: "openai-codex"` and `defaultModel: "gpt-6.2-astra"`.
 Automatic compaction is enabled through `compaction.enabled: true`.
 Packages declare voice and `git:github.com/waldoibarra/pi-lens@latest`.
 The Lens declaration disables package skills and prompts with empty filters.
