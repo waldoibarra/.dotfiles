@@ -36,56 +36,26 @@ class AgentHarnessTest(unittest.TestCase):
         self.assertEqual(settings["terminal"]["images"], "kitty")
         self.assertTrue(settings["terminal"].get("showImages", True))
 
-    def test_worker_scope_rejects_lead_inheritance(self):
-        settings = json.loads((ROOT / "home/.pi/agent/settings.json").read_text())
-        scope = settings["subagents"]["modelScope"]
-        self.assertTrue(scope["enforce"])
-        self.assertTrue(scope["strict"])
-        self.assertNotIn("inherit", scope["allow"])
-        self.assertNotIn("scoped", scope["allow"])
-        self.assertTrue(scope["allow"])
-        for model in scope["allow"]:
-            self.assertTrue(model.startswith("openai-codex/"))
-            self.assertNotIn("astra", model)
-            self.assertNotIn("fable", model)
-            self.assertNotIn("*", model)
-        self.assertNotIn("modelScope", settings)
-        self.assertEqual(settings["steeringMode"], "all")
+    def test_worker_model_selection_is_explicit_policy(self):
+        policy = (ROOT / "home/.agents/references/delegation.md").read_text()
+        self.assertIn("Select every worker model explicitly", policy)
+        self.assertIn("never inherit the lead", policy)
 
-    def test_shared_roles_and_pi_overrides(self):
+    def test_shared_roles_are_harness_neutral(self):
         roles = ROOT / "home/.agents/roles"
-        settings = json.loads((ROOT / "home/.pi/agent/settings.json").read_text())
-        config = settings["subagents"]
         expected = {"plan-reviewer", "code-auditor", "implementer", "browser-tester", "docs-writer"}
         self.assertEqual({p.stem for p in roles.glob("*.md")}, expected)
-        self.assertEqual(set(config["agentOverrides"]), expected)
-        self.assertEqual(config["agentScanDirs"], ["~/.agents/roles"])
-        self.assertTrue(config["disableBuiltins"])
         for name in expected:
             frontmatter = yaml.safe_load((roles / f"{name}.md").read_text().split("---", 2)[1])
             self.assertEqual(set(frontmatter), {"name", "description"})
             self.assertEqual(frontmatter["name"], name)
-            override = config["agentOverrides"][name]
-            self.assertEqual(override["systemPromptMode"], "append")
-            for key in ("inheritGlobalContext", "inheritProjectContext", "inheritSkills"):
-                self.assertTrue(override[key], (name, key))
-            self.assertNotIn("model", override)
-        for name in ("plan-reviewer", "code-auditor"):
-            tools = config["agentOverrides"][name]["tools"]
-            self.assertIsInstance(tools, list)
-            self.assertNotIn("write", tools)
-            self.assertNotIn("edit", tools)
-            self.assertIn("bash", tools)
+            self.assertTrue(frontmatter["description"].strip())
 
-    def test_runner_tracks_latest_and_optional_resources_are_off(self):
+    def test_pi_packages_exclude_retired_runner_and_filter_lens_resources(self):
         settings = json.loads((ROOT / "home/.pi/agent/settings.json").read_text())
-        package = next(
-            p for p in settings["packages"]
-            if isinstance(p, dict) and p["source"].startswith("npm:pi-subagents@")
-        )
-        self.assertEqual(package["source"], "npm:pi-subagents@latest")
-        self.assertEqual(package["skills"], [])
-        self.assertEqual(package["prompts"], [])
+        self.assertNotIn("subagents", settings)
+        self.assertFalse(any("pi-subagents" in str(p) for p in settings["packages"]))
+        self.assertIn("npm:pi-live-codex", settings["packages"])
         lens_package = next(
             p for p in settings["packages"]
             if isinstance(p, dict) and p["source"].startswith("git:github.com/waldoibarra/pi-lens@")
@@ -93,11 +63,6 @@ class AgentHarnessTest(unittest.TestCase):
         self.assertEqual(lens_package["source"], "git:github.com/waldoibarra/pi-lens@latest")
         self.assertEqual(lens_package["skills"], [])
         self.assertEqual(lens_package["prompts"], [])
-        config = json.loads((ROOT / "home/.pi/agent/extensions/subagent/config.json").read_text())
-        self.assertIn("agent-management", config["disabledFeatures"])
-        self.assertIn("workflow-scripts", config["disabledFeatures"])
-        self.assertFalse(config["scheduledRuns"]["enabled"])
-        self.assertFalse(config["missions"]["enabled"])
 
     def test_docs_requires_shared_communication_rules(self):
         skill = " ".join((ROOT / "home/.agents/skills/docs/SKILL.md").read_text().split())
@@ -363,6 +328,16 @@ class AgentHarnessTest(unittest.TestCase):
                     for directory in (".agents/skills", ".claude/skills", ".cursor/skills")
                     for link in (home / directory).iterdir()
                 }
+                for installed, source in (
+                    (".local/bin/agent-mail", "scripts/agent-mail.py"),
+                    (".local/bin/agent-mail-stop", "scripts/agent-mail-stop.py"),
+                    (".pi/agent/extensions/agent-mail.ts",
+                      "home/.pi/agent/extensions/agent-mail.ts"),
+                ):
+                    link = home / installed
+                    self.assertTrue(link.is_symlink())
+                    self.assertEqual(link.resolve(strict=True), ROOT / source)
+                    current_links[installed] = link.lstat().st_mtime_ns
                 current_links[str(claude_instructions)] = instruction_mtime
                 for name in ("communication.md", "communication-rules.md"):
                     link = references / name
@@ -377,10 +352,6 @@ class AgentHarnessTest(unittest.TestCase):
                     placement.resolve(),
                     ROOT / "home/.agents/skills/feedback-loop/references/placement.md",
                 )
-                config = home / ".pi/agent/extensions/subagent/config.json"
-                self.assertEqual(
-                    config.resolve(), ROOT / "home/.pi/agent/extensions/subagent/config.json"
-                )
                 self.assertTrue((home / ".claude/agents").is_dir())
                 self.assertFalse((home / ".claude/agents").is_symlink())
 
@@ -394,7 +365,6 @@ class AgentHarnessTest(unittest.TestCase):
             sources = [
                 home / "projects/open-source/pi/packages/coding-agent/dist/bundle/cli.js",
                 home / "projects/open-source/pi-lens/src/index.ts",
-                home / "projects/open-source/pi-subagents/index.ts",
                 home / ".pi/agent/npm/node_modules/pi-live-codex/index.ts",
             ]
             for source in sources:
@@ -420,7 +390,7 @@ class AgentHarnessTest(unittest.TestCase):
             launch = json.loads(capture.read_text())
             base_argv = [
                 str(sources[0]), "--no-extensions", "-e", str(sources[1]),
-                "-e", str(sources[2]), "-e", str(sources[3]),
+                "-e", str(sources[2]),
             ]
             self.assertEqual(launch["argv"], base_argv)
             self.assertEqual(Path(launch["cwd"]).resolve(), workspace.resolve())
@@ -452,26 +422,9 @@ class AgentHarnessTest(unittest.TestCase):
                     finally:
                         source.touch()
 
-    def test_documented_repository_guard_rejects_wrong_root(self):
-        guide = (ROOT / "docs/ai-harness/pi/delegation.md").read_text()
-        guard = guide.split("```sh\nactual_root=", 1)[1].split("```", 1)[0]
-        with tempfile.TemporaryDirectory(prefix="dotfiles-repo-guard-") as scratch:
-            expected = Path(scratch) / "expected repo"
-            wrong = Path(scratch) / "wrong repo"
-            driver = Path(scratch) / "guard.sh"
-            driver.write_text("actual_root=" + guard)
-            env = dict(os.environ, EXPECTED_REPO_ROOT=str(expected.resolve()))
-            env.pop("GIT_DIR", None)
-            env.pop("GIT_WORK_TREE", None)
-            for directory, code in ((expected, 0), (wrong, 1)):
-                directory.mkdir()
-                subprocess.run(["git", "init", "--quiet", str(directory)], env=env,
-                                check=True, capture_output=True, timeout=10)
-                result = subprocess.run(["sh", str(driver)], cwd=directory, env=env,
-                                        capture_output=True, text=True, timeout=10)
-                self.assertEqual(result.returncode, code, result.stderr)
-                if code:
-                    self.assertIn("Repository mismatch", result.stderr)
+    def test_worker_brief_policy_requires_verified_repository_scope(self):
+        policy = (ROOT / "home/.agents/references/orchestration.md").read_text()
+        self.assertIn("bind repository work to its verified Git root", policy)
 
     @unittest.skipUnless(os.environ.get("PI_PACKAGE_DIR"), "set PI_PACKAGE_DIR for host checks")
     def test_compiled_host_persists_and_resumes_session_offline(self):
@@ -519,8 +472,7 @@ class AgentHarnessTest(unittest.TestCase):
                 "'profile': os.environ.get('PI_CODING_AGENT_DIR'),\n"
                 "'packages': settings['packages'],\n"
                 "'api_key_present': 'OPENAI_API_KEY' in os.environ}) + '\\n')\n"
-                "key = 'INSTALL_EXIT' if sys.argv[1] == 'install' else 'UPDATE_EXIT'\n"
-                "sys.exit(int(os.environ.get(key, '0')))\n"
+                "sys.exit(int(os.environ.get('UPDATE_EXIT', '0')))\n"
             )
             fake_pi.chmod(0o755)
             driver = home / "reconcile.sh"
@@ -539,33 +491,22 @@ class AgentHarnessTest(unittest.TestCase):
                 PI_CODING_AGENT_DIR="/unused/trial", OPENAI_API_KEY="fixture-only",
                 CAPTURE=str(capture),
             )
-            for install_exit, update_exit, expected in ((0, 0, 0), (19, 0, 1), (0, 19, 19)):
+            for expected in (0, 19):
                 capture.write_text("")
-                env.update(INSTALL_EXIT=str(install_exit), UPDATE_EXIT=str(update_exit))
+                env["UPDATE_EXIT"] = str(expected)
                 result = subprocess.run(["bash", str(driver)], env=env, capture_output=True,
                                         text=True)
                 self.assertEqual(result.returncode, expected, result.stderr)
                 calls = [json.loads(line) for line in capture.read_text().splitlines()]
-                self.assertEqual(
-                    calls[0]["argv"], ["install", "npm:pi-subagents@latest", "--no-approve"]
-                )
-                self.assertEqual(len(calls), 1 if install_exit else 2)
-                if not install_exit:
-                    self.assertEqual(
-                        calls[1]["argv"], ["update", "--extensions", "--no-approve"]
-                    )
+                expected_calls = [["update", "--extensions", "--no-approve"]]
+                self.assertEqual([c["argv"] for c in calls], expected_calls)
                 for observed in calls:
                     self.assertEqual(Path(observed["cwd"]).resolve(), home.resolve())
                     self.assertEqual(observed["profile"], str(profile))
                     self.assertFalse(observed["api_key_present"])
-                if not install_exit:
-                    lens_package = next(
-                        p for p in calls[1]["packages"]
-                        if isinstance(p, dict)
-                        and p["source"] == "git:github.com/waldoibarra/pi-lens@latest"
-                    )
-                    self.assertEqual(lens_package["skills"], [])
-                    self.assertEqual(lens_package["prompts"], [])
+                self.assertEqual(calls[0]["packages"], json.loads(
+                    (ROOT / "home/.pi/agent/settings.json").read_text()
+                )["packages"])
 
 
 if __name__ == "__main__":

@@ -74,7 +74,7 @@ try {
     for (const reference of [
       "communication-rules.md", "orchestration.md", "memory.md", "shell.md", "delegation.md",
     ]) {
-      assert(prompt.includes(`~/.agents/references/${reference}`));
+      assert(prompt.includes(`references/${reference}`), `Missing startup route: ${reference}`);
       assert.equal(realpathSync(join(homedir(), ".agents/references", reference)),
         join(root, "home/.agents/references", reference));
     }
